@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<div id='content' th:fragment="body">
+				<h1>Empresa</h1>
+				<form autocomplete="off" method="post" th:action="${!editMode} ? @{/public/salao/save} :  @{/admin/salao/save}">
+					<table id="cadastro" th:object="${salao}">
+					<input type="hidden" name="edit" th:value="${editMode}">
+					<input type="hidden" th:if="${editMode}" th:field="*{idSalao}" />
+					<input type="hidden" th:if="${editMode}" th:field="*{user}" />
+					<input type="hidden" th:if="${editMode}" th:field="*{password}" />
+						<tr>
+							<td id="cadastro">
+								<input class="nome" type="text" id="nome" placeholder="Nome" th:field="*{nome}" /><br />
+								<div id="fielderror" th:if="${#fields.hasErrors('nome')}" th:text="${#fields.errors('nome')[0]}"></div>
+							</td>
+							<td id="cadastro">
+								<input class="cpf_cnpj" type="text" maxlength="14" id="cnpj" placeholder="CNPJ" th:field="*{cnpj}" 
+									   onfocus="javascript: retirarFormatacao(this);" onblur="javascript: mascaraCnpj(this);" 
+									   onkeydown="return isNumberKey(event)" /><br />
+								<div id="fielderror" th:if="${#fields.hasErrors('cnpj')}" th:text="${#fields.errors('cnpj')[0]}"></div>
+							</td>
+						</tr>
+					</table>
+					<div th:replace="email :: email"></div>
+					<div th:replace="telefone :: telefone"></div>
+					<div th:replace="endereco :: endereco"></div>
+					<table th:object="${salao}" th:if="${!editMode}">
+						<tr>
+							<td id="cadastro">
+								<input type="text" id="username" placeholder="Usuário" th:field="*{user}" /><br />
+								<div id="fielderror" th:if="${#fields.hasErrors('user')}" th:text="${#fields.errors('user')[0]}"></div>
+							</td>
+							<td id="cadastro">
+								<input type="password" id="password" placeholder="Senha" th:field="*{password}" /><br />
+								<div id="fielderror" th:if="${#fields.hasErrors('password')}" th:text="${#fields.errors('password')[0]}"></div>
+							</td>
+						</tr>
+					</table>
+					<div id="saveok" th:if="${saveOK && !editMode}">
+						Empresa cadastrada com sucesso.<br />
+					</div>
+					<div id="saveok" th:if="${saveOK && editMode}">
+						Empresa atualizada com sucesso.<br />
+					</div>
+					<input id="newreg" type="submit" value="Gravar">
+				</form>
+			</div>
+</html>

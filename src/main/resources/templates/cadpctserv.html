@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<div>
+				<h1>Pacote de Serviço</h1>
+				<form method="post" th:action="@{/admin/servico/pacote/save}">
+					<fieldset th:object="${pctServico}" id="pctServico">
+						<table class="ajstcenter">
+							<tr>
+								<td id="cadastro">
+									<select class="servico" id="servicoPacote" th:field="*{servicoPacote}">
+									    <option value="0" selected="selected">Serviço</option>
+										<option th:each="servico : ${servicos}" th:value="${servico.getIdServico()}" th:text="${servico.descricao}"></option>
+									</select>
+									<input class="quantidade" type="text" id="quantidade" placeholder="Qtdade" th:field="*{quantidade}" />
+									<input class="valor" type="text" id="valor" placeholder="Valor" th:field="*{valor}" />
+								</td>
+								<td id="tdAtivo">
+									<div th:replace="ativo :: ativo"></div>
+								</td>
+							</tr>
+						</table>
+					</fieldset>
+					<input title="Gravar" id="cadastrar" type="image" th:src="@{/images/cadastrar.png}">
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

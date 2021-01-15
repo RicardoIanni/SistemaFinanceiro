@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<h1>Fluxo de Caixa</h1>
+			<form method="get" th:object="${filter}" th:action="@{/admin/financeiro/fluxocaixa}">
+			<div th:replace="filtro :: financeiro"></div>
+			</form>
+			<table>
+				<tr>
+					<td id="fluxocaixa">
+						<form method="get" th:action="@{/admin/financeiro/pagamento/new}">
+							<input id="newreg" type="submit" value="Novo Pagamento" />
+						</form>
+					</td>
+					<td id="fluxocaixa">
+						<form method="get" th:action="@{/admin/financeiro/recebimento/new}">
+							<input id="newreg" type="submit" value="Novo Recebimento" />
+						</form>
+					</td>
+				</tr>
+			</table>
+			<table id="resultset" th:if="${fluxoCaixa.size() > 0}">
+				<tr>
+					<th id="no_border"></td>
+					<th id="data">Data</th>
+					<th id="descricao">Descrição</th>
+					<th id="valor">Valor</th>
+					<th id="valor" class="endline">Saldo</th>
+				</tr>
+				<tr th:object="${conta}">
+					<td></td>
+					<td id="resultset"></td>
+					<td id="resultset"></td>
+					<td id="resultset"></td>
+					<td id="valor" class="endline" th:text="${saldo.strSaldo(saldo.saldo)}" th:style="${saldo.saldo < 0 ? 'color: red;' : ''}"></td>
+				</tr>
+				<tr th:each="movimento : ${fluxoCaixa}">
+					<td id="seta" style="border: none;"><img id="fluxocaixa" th:src="${movimento.valor < 0 ? '/images/pagamento.png' : '/images/recebimento.png'}" /></td>
+					<td id="resultset" th:text="${movimento.getDateFormated(movimento.vencimento)}"></td>
+					<td id="resultset" th:text="${movimento.descricao}"></td>
+					<td id="valor" th:text="${movimento.strValor()}" th:style="${movimento.valor < 0 ? 'color: red;' : ''}"></td>
+					<td id="valor" class="endline" th:text="${(saldo.strSaldo(saldo.saldo = (saldo.saldo + movimento.valor)))}" th:style="${saldo.saldo + movimento.valor < 0 ? 'color: red;' : ''}"></td>
+				</tr>
+			</table>
+			<div id="no_resultset" th:if="${fluxoCaixa.size() == 0}">
+				 Não foram encontrados movimentos para o filtro utilizado. 
+			</div>
+		</div>
+	</body>
+</html>

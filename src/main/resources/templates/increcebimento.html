@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<h1>Contas a Receber</h1>
+			<div th:if="${contas.size() == 0}">
+				<div id="no_account">
+					Não existem contas cadastradas.
+				</div>
+				<form method="get" th:action="@{/admin/conta/new}">
+					<input id="newreg" type="submit" value="Conta">
+				</form>
+			</div>
+			<div th:if="${clientes.size() == 0}">
+				<div id="no_customer">
+					Não existem clientes cadastrados.
+				</div>
+				<form method="get" th:action="@{/admin/cliente/new}">
+					<input id="newreg" type="submit" value="Cliente">
+				</form>
+			</div>
+			<form id="recebimento" method="post" autocomplete="off" th:action="@{/admin/financeiro/recebimento/save}">
+				<div th:if="${contas.size() > 0 && clientes.size() > 0}">
+				<table id="cadastro" th:object="${recebimento}">
+					<tr>
+						<td id="cadastro">
+							<input id="idRecebimento" type="hidden" th:field="*{idRecebimento}">
+							<input id="descricao" type="text" placeholder="Descrição" th:field="*{descricao}">
+							<input id="vencimento" type="date" th:field="*{vencimento}" /><br />
+						</td>
+					</tr>
+					<tr>
+						<td id="cadastro">
+							<select id="contaRecebimento" th:field="*{contaRecebimento}">
+							    <option value="0" selected="selected">Conta</option>
+								<option th:each="conta : ${contas}" th:value="${conta.getIdConta()}" th:text="${conta.descricao}"></option>
+							</select>
+							<select id="clienteRecebimento" th:field="*{clienteRecebimento}">
+							    <option value="0" selected="selected">Cliente</option>
+								<option th:each="cliente : ${clientes}" th:value="${cliente.getIdCliente()}" th:text="${cliente.nome}"></option>
+							</select>
+							<input id="valor" type="text" placeholder="Valor" th:field="*{valor}" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table class="no_margin">
+								<tr>
+									<td id="recorrenteChk">
+										<label class="lblAtivo">Recorrente
+											<input id="recorrente" type="checkbox" th:field="*{recorrente}" onchange="recorrenteChange(this)" />
+											<span class="checkmark"></span>
+										</label>
+									</td>
+									<td id="recorrenteSlct">
+										<select id="tipoRecorrencia" th:field="*{recorrenciaRecebimento}">
+										    <option value="0" selected="selected">Recorrência</option>
+											<option th:each="tipoRecorrencia : ${tiposRecorrencia}" 
+													th:value="${tipoRecorrencia.getIdTipoRecorrencia()}" 
+													th:text="${tipoRecorrencia.descricao}"></option>
+										</select>
+									</td>
+									<td id="recorrenteQtd">
+										<input id="qtdRecorrencia"  type="number" placeholder="Qtdade" th:field="*{qtdRecorrencia}">
+									</td>
+									<td id="realizadoChk">
+										<label class="lblAtivo">Realizado
+											<input id="realizado" type="checkbox" th:field="*{realizado}" />
+											<span class="checkmark"></span>
+										</label>
+									</td>
+								</tr>
+							</table>
+					</tr>
+				</table>
+				<input id="newreg" type="submit" value="Gravar" />
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

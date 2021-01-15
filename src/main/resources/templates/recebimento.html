@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<h1>Contas a Receber</h1>
+			<form method="get" th:object="${filter}" th:action="@{/admin/financeiro/recebimento}">
+				<div th:replace="filtro :: financeiro"></div>
+			</form>
+			<form method="get" th:action="@{/admin/financeiro/recebimento/new}">
+				<input id="newreg" type="submit" value="Novo Registro" />
+			</form>
+			<table id="resultset" th:if="${recebimentos.size() > 0}" class="ajstcenter">
+				<tr>
+					<th id="data">Data</th>
+					<th id="conta">Conta</th>
+					<th id="descricao">Descrição</th>
+					<th id="valor" class="endline">Valor</th>
+				</tr>
+				<tr th:each="recebimento : ${recebimentos}">
+					<td id="resultset" th:text="${recebimento.getDateFormated(recebimento.vencimento)}"></td>
+					<td id="resultset" th:text="${recebimento.getDescricaoConta()}"></td>
+					<td id="resultset" th:text="${recebimento.descricao}"></td>
+					<td id="valor" class="endline" th:text="${recebimento.strValor()}"></td>
+					<td id="acao"><form method="post" th:action="@{/admin/financeiro/recebimento/edit}">
+						<input type="hidden" id="idRecebEdit" name="idRecebEdit" th:value="${recebimento.idRecebimento}">
+						<input type="image" id="acao" th:src="@{/images/editar.png}">
+					</form></td>
+					<td id="acao">
+						<img id="acao" th:src="@{/images/excluir.png}" th:onclick="'javascript: confirmWindow(\'delete\', \'idRecebDelete\', ' + ${recebimento.idRecebimento} + ');'">
+					</td>
+				</tr>
+			</table>
+			<div id="no_resultset" th:if="${recebimentos.size() == 0}">
+ 				Não foram encontrados recebimentos para o filtro utilizado.
+ 			</div>
+			<div id="delete">Confima exclusão?<br />
+			<form method="post" th:action="@{/admin/financeiro/recebimento/delete}">
+				<input id="idRecebDelete" type="hidden" name="idRecebDelete" value="0">
+				<input id="deleteBtn" type="submit" value="Sim" onclick="document.getElementById('delete').style.visibility = 'hidden';">
+				<input id="deleteBtn" type="button" value="Não" onclick="document.getElementById('delete').style.visibility = 'hidden';">
+			</form></div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+
+	<div th:replace="header :: header"></div>
+	<body>
+		<div th:replace="logo :: dashboard"></div>
+		<div th:replace="menu :: navbar"></div> 
+		<!-- Cabeçalho - Fim -->
+
+		<!--  Conteúdo -->
+		<div id="content" layout:fragment="content"></div>
+		
+		
+		<!-- Rodapé - Início -->
+	</body>
+</html>

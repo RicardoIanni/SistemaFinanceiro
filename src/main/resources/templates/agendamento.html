@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<h1>Agendamentos</h1>
+			<form id="filter" method="get" th:object="${filter}" th:action="@{/admin/agendamento/}">
+				<div th:replace="filtro :: agendamento"></div>
+			</form>
+			<form method="get" th:action="@{/admin/agendamento/new}">
+				<input id="newreg" type="submit" value="Novo Registro" />
+			</form>
+			<table id="resultset" th:if="${agendamentos.size() > 0}">
+				<tr>
+					<th id="data">Data</th>
+					<th id="hora">Hora</th>
+					<th id="nome">Cliente</th>
+					<th id="nome">Atendente</th>
+					<th id="descricao">Serviço</th>
+					<th id="situacao" class="endline">Situação</th>
+				</tr>
+				<tr th:each="agendamento : ${agendamentos}">
+					<td id="resultset" th:text="${agendamento.getDateFormated(agendamento.dataAgendamento)}"></td>
+					<td id="resultset" th:text="${agendamento.horaAgendamento}"></td>
+					<td id="resultset" th:text="${agendamento.clienteAgendamento.nome}"></td>
+					<td id="resultset" th:text="${agendamento.funcionarioAgendamento.nome}"></td>
+					<td id="resultset" th:text="${agendamento.servicoAgendamento.descricao}"></td>
+					<td id="resultset" class="endline" th:text="${agendamento.situacao}"></td>
+					<td id="acao"><form method="post" th:action="@{/admin/agendamento/edit}">
+						<input type="hidden" id="idAgendEdit" name="idAgendEdit" th:value="${agendamento.idAgendamento}">
+						<input type="image" id="acao" th:src="@{/images/editar.png}" d>
+					</form></td>
+					<td id="acao"><form method="post" th:action="@{/admin/agendamento/cancel}">
+						<input type="hidden" id="idAgendCancel" name="idAgendCancel" th:value="${agendamento.idAgendamento}">
+						<input type="image" id="acao" th:src="@{/images/excluir.png}" th:disabled="${agendamento.situacao.toString() == 'Cancelado'}">
+					</form></td>
+					<td id="acao"><form method="post" th:action="@{/admin/agendamento/confirm}">
+						<input type="hidden" id="idAgendConfirm" name="idAgendConfirm" th:value="${agendamento.idAgendamento}">
+						<input type="image" id="acao" th:src="@{/images/confirmar.png}" th:disabled="${agendamento.situacao.toString() == 'Realizado'}">
+					</form></td>
+				</tr>
+			</table>
+			<div id="no_resultset" th:if="${agendamentos.size() == 0}">
+				Não foram encontrados agendamentos para o filtro utilizado.
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+					<table id="endereco" th:fragment="endereco" th:object="${endereco}">
+					<input type="hidden" th:if="${editMode}" th:field="*{idEndereco}" />
+						<tr>
+							<td id="cadastro">
+								<select id="tipoEndereco" th:field="*{tipoEndereco}">
+								    <option value="0" selected="selected"></option>
+									<option th:each="tipoendereco : ${tiposEndereco}" th:value="${tipoendereco.getIdTipoEndereco()}"
+											th:text="${tipoendereco.descricao}"></option>
+								</select>
+								<input id="logradouro" type="text" placeholder="Logradouro" th:field="*{logradouro}" />
+							<td>
+						</tr>
+						<tr>
+							<td id="cadastro">
+								<input id="numero" type="text" placeholder="Número" th:field="*{numero}" />
+								<input id="complemento" type="text" placeholder="Complemento" th:field="*{complemento}" />
+								<input id="bairro" type="text" placeholder="Bairro" th:field="*{bairro}" />
+							</td>
+						</tr>
+						<tr>
+							<td id="cadastro">
+								<input id="cidade" type="text" placeholder="Cidade" th:field="*{cidade}" />
+								<input id="estado" type="text" maxlength="2" placeholder="Estado" th:field="*{estado}" 
+									   onkeydown="return isLetterKey(event)" onblur="javascript: this.value = this.value.toUpperCase();" />
+								<input id="cep" type="text" maxlength="8" placeholder="CEP" th:field="*{cep}" 
+									   onfocus="javascript: retirarFormatacao(this);" onblur="javascript: mascaraCep(this);" 
+									   onkeydown="return isNumberKey(event)" />
+							</td>
+						</tr>
+					</table>
+	</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<h1>Clientes</h1>
+			<form id="filter" method="get" th:object="${filter}" th:action="@{/admin/cliente/}">
+				<div th:replace="filtro :: cadastro"></div>
+			</form>
+			<form method="get" th:action="@{/admin/cliente/new}">
+				<input id="newreg" type="submit" value="Novo Registro" />
+			</form>
+			<table id="resultset" th:if="${clientes.size() > 0}">
+				<tr>
+					<th id="nome">Nome</th>
+					<th id="cpf_cnpj">CPF</th>
+					<th id="email">E-Mail</th>
+					<th id="telefone" class="endline">Telefone</th>
+				</tr>
+				<tr th:each="cliente : ${clientes}">
+					<td id="resultset" th:text="${cliente.nome}"></td>
+					<td id="resultset" th:text="${cliente.getFormattedCpf()}"></td>
+					<td id="resultset" th:text="${cliente.email(0)}"></td>
+					<td id="resultset" class="endline" th:text="${cliente.telefone(0)}"></td>
+					<td id="acao"><form method="get" th:action="@{/admin/cliente/edit}">
+						<input type="hidden" id="idCliEdit" name="idCliEdit" th:value="${cliente.idCliente}">
+						<input type="image" id="acao" th:src="@{/images/editar.png}">
+					</form></td>
+					<td id="acao">
+						<img id="acao" th:src="@{/images/excluir.png}" th:onclick="'javascript: confirmWindow(\'delete\', \'idCliDelele\', ' + ${cliente.idCliente} + ');'">
+					</td>
+				</tr>
+			</table>
+			<div id="no_resultset" th:if="${clientes.size() == 0}">
+				Não foram encontrados clientes para o filtro utilizado.
+			</div>
+			<div id="delete">Confima exclusão?<br />
+			<form method="post" th:action="@{/admin/cliente/delete}">
+				<input id="idCliDelele" type="hidden" name="idCliDelele" value="0">
+				<input id="deleteBtn" type="submit" value="Sim" onclick="document.getElementById('delete').style.visibility = 'hidden';">
+				<input id="deleteBtn" type="button" value="Não" onclick="document.getElementById('delete').style.visibility = 'hidden';">
+			</form></div>
+		</div>
+	</body>
+</html>

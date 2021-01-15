@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+	<div th:fragment="content">
+	<div>
+		<form method="get" th:action="@{/admin/agendamento/}">
+			<input id="menu" type="submit" value="Agendamento">
+		</form>
+		<form method="get" th:action="@{/admin/cliente/}">
+			<input id="menu" type="submit" value="Cliente">
+		</form>
+		<form method="get" th:action="@{/admin/fornecedor/}">
+			<input id="menu" type="submit" value="Fornecedor">
+		</form>
+		<form method="get" th:action="@{/admin/funcionario/}">
+			<input id="menu" type="submit" value="Profissional">
+		</form>
+		<form method="get" th:action="@{/admin/produto/}">
+			<input id="menu" type="submit" value="Produto">
+		</form>
+		<form method="get" th:action="@{/admin/servico/}">
+			<input id="menu" type="submit" value="Serviço">
+		</form>
+		<!-- <form method="get" th:action="@{/admin/servico/pacote/new}">
+			<input id="menu" type="submit" value="Pacote de Serviço">
+		</form> -->
+		<form method="get" th:action="@{/admin/financeiro/fluxocaixa}">
+			<input id="menu" type="submit" value="Fluxo de Caixa">
+		</form>
+		<form method="get" th:action="@{/admin/financeiro/pagamento}">
+			<input id="menu" type="submit" value="Contas a Pagar">
+		</form>
+		<form method="get" th:action="@{/admin/financeiro/recebimento}">
+			<input id="menu" type="submit" value="Contas a Receber">
+		</form>
+		<form method="get" th:action="@{/admin/conta/}">
+			<input id="menu" type="submit" value="Conta">
+		</form>
+		<!-- <form method="get" th:action="@{/admin/servico/cliente/new}">
+			<input id="menu" type="submit" value="Pacote de Serviços - Venda">
+		</form> -->
+		<form method="get" th:action="@{/admin/salao/edit}">
+			<input id="menu" type="submit" value="Editar dados">
+		</form>
+		<input id="menu" type="button" value="Sair" th:onclick="'location.href=\'' + @{/logout} + '\';'" />
+		</div>
+	</div>
+	
+	<div th:fragment="navbar" class="navbar">
+		<a th:href="@{/admin/home}">Home</a>
+		<a th:href="@{/admin/agendamento/}">Agendamento</a>
+		<div class="dropdown">
+			<button class="dropbtn">Cadastro</button>
+			<div class="dropdown-content">
+				<a th:href="@{/admin/cliente/}">Cliente</a>
+				<a th:href="@{/admin/fornecedor/}">Fornecedor</a>
+				<a th:href="@{/admin/funcionario/}">Profissional</a>
+				<a th:href="@{/admin/produto/}">Produto</a>
+				<a th:href="@{/admin/servico/}">Serviço</a>
+			</div>
+		</div>
+		<div class="dropdown">
+			<button class="dropbtn">Financeiro</button>
+			<div class="dropdown-content">
+				<a th:href="@{/admin/financeiro/pagamento}">Contas a Pagar</a>
+				<a th:href="@{/admin/financeiro/recebimento}">Contas a Receber</a>
+				<a th:href="@{/admin/financeiro/fluxocaixa}">Fluxo de Caixa</a>
+			</div>
+		</div>
+		<div class="dropdown">
+			<button class="dropbtn">Configurações</button>
+			<div class="dropdown-content">
+				<a th:href="@{/admin/conta/}">Conta</a>
+				<a th:href="@{/admin/salao/edit}">Editar Dados</a>
+			</div>
+		</div>
+		<a th:href="@{/logout}">Sair</a>
+	</div>
+</html>

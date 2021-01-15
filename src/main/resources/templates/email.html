@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+					<table id="email" th:fragment="email" th:object="${email}">
+					<input type="hidden" th:if="${editMode}" th:field="*{idEmail}" />
+						<tr>
+							<td id="cadastro">
+								<input id="endemail" type="text" placeholder="E-mail" th:field="*{endEmail}" /><br />
+								<div id="fielderror" th:if="${#fields.hasErrors('endEmail')}" th:text="${#fields.errors('endEmail')[0]}"></div></td> 
+							<td id="cadastro">
+								<select id="tipoemail" th:field="*{tipoEmail}">
+								    <option value="0" selected="selected"></option>
+									<option th:each="tipoemail : ${tiposEmail}" th:value="${tipoemail.getIdTipoEmail()}"
+											th:text="${tipoemail.descricao}"></option>
+								</select>
+							</td>
+						</tr>
+					</table>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div th:fragment="ativo">
+	<label class="lblAtivo">Ativo
+		<input type="checkbox" th:field="*{ativo}" />
+		<span class="checkmark"></span>
+	</label>
+</div>
+
+<div th:fragment="default">
+	<label class="lblAtivo">Padrão
+		<input type="checkbox" th:field="*{padrao}" />
+		<span class="checkmark"></span>
+	</label>
+</div>
+</body>
+</html>

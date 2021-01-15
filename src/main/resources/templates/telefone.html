@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+					<table id="telefone" th:fragment="telefone" th:object="${telefone}">
+					<input type="hidden" th:if="${editMode}" th:field="*{idTelefone}" />
+						<tr>
+							<td id="cadastro">
+								<input id="ddd" type="text" maxlength="2" placeholder="DDD" style="width: 50px;" th:field="*{ddd}" 
+									   onblur="javascript: completeDDD(this)" onkeydown="return isNumberKey(event)" /><br />
+								<div id="fielderror" th:if="${#fields.hasErrors('ddd')}" th:text="${#fields.errors('ddd')[0]}"></div>
+							</td>
+							<td id="cadastro">
+								<input id="numtelefone" type="text" maxlength="9" placeholder="Número" style="width: 150px;" 
+									   th:field="*{numTelefone}" onfocus="javascript: retirarFormatacao(this);" 
+									   onblur="javascript: mascaraTelefone(this);" onkeydown="return isNumberKey(event)" /><br />
+								<div id="fielderror" th:if="${#fields.hasErrors('numTelefone')}" 
+									 th:text="${#fields.errors('numTelefone')[0]}"></div>
+							</td>
+							<td id="cadastro">
+								<select id="tipotelefone" th:field="*{tipoTelefone}">
+								    <option value="0" selected="selected"></option>
+									<option th:each="tipotelefone : ${tiposTelefone}" th:value="${tipotelefone.getIdTipoTelefone()}"
+											th:text="${tipotelefone.descricao}"></option>
+								</select>
+							</td>
+						</tr>
+					</table>
+</body>
+</html>

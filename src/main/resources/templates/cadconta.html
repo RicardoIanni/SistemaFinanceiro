@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<h1>Contas</h1>
+			<form method="post" autocomplete="off" th:object="${conta}" th:action="@{/admin/conta/save}">
+				<input type="hidden" th:field="*{idConta}">
+				<table id="cadastro">
+					<tr>
+						<td id="cadastro" colspan="2">
+							<input id="descricao" type="text" placeholder="Descrição" th:field="*{descricao}" />
+							<select id="tipoconta" th:field="*{tipoConta}">
+							    <option value="0" selectesd="selected">Tipo de conta</option>
+								<option th:each="tipoConta : ${tiposConta}" th:value="${tipoConta.getIdTipoConta()}" 
+										th:text="${tipoConta.descricao}"></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td id="cadastro">
+							<input id="valor" type="text" placeholder="Saldo Inicial" 
+								   th:text="${#numbers.formatCurrency(saldoInicial)}" th:field="*{saldoInicial}" />
+							<input id="Data" type="date" th:field="*{data}">
+						</td>
+						<td id="cadastro">
+							<div th:replace="ativo :: default"></div>
+						</td>
+					</tr>
+				</table>
+				<input id="newreg" type="submit" value="Gravar">
+			</form>
+		</div>
+	</body>
+</html>

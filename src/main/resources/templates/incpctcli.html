@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<div>
+				<h1>Pacote de Serviços - Venda</h1>
+				<form method="post" th:action="@{/admin/servico/cliente/save}">
+					<fieldset th:object="${pctCliente}" id="pctCliente">
+						<select class="pessoa" id="clientePctCliente" th:field="*{clientePctCliente}">
+						    <option value="0" selected="selected">Cliente</option>
+							<option th:each="cliente : ${clientes}" th:value="${cliente.getIdCliente()}" th:text="${cliente.nome}"></option>
+						</select>
+						<select class="servico" id="pacoteServicoPctCliente" th:field="*{pacoteServicoPctCliente}">
+						    <option value="0" selected="selected">Pacote de serviços</option>
+							<option th:each="pctservico : ${pctservicos}" th:value="${pctservico.getIdPacote()}" th:text="${pctservico.getServicoPacote().descricao} + ' - ' + ${pctservico.quantidade} + ' atendimentos'"></option>
+						</select>
+					</fieldset>
+					<input type="submit" value="Incluir" />
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout_login}">
+	
+	<body>
+		<div id="login" layout:fragment="content">
+			<form autocomplete="off" method="post" th:action="@{/login}">
+				<input id="username" type="text"     name="username" placeholder="Usuário" /><br>
+				<input id="password" type="password" name="password" placeholder="Senha" /><br>
+				<div   id="loginError" th:if="${loginError}">
+					Usuário ou senha inválidos
+				</div>				
+				<input id="login"    type="submit"   value="Login" />
+				<input id="login"    type="button"   value="Cadastre-se" onclick="document.forms['cadastro'].submit()" />
+			</form>
+			<form method="get" name="cadastro" th:action="@{/public/salao/new}"></form>
+		</div>
+	</body>
+</html>

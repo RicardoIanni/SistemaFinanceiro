@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<h1>Serviços</h1>
+			<form method="post" autocomplete="off" th:object="${servico}" th:action="@{/admin/servico/save}">
+			<input type="hidden" name="editMode" th:value="${editMode}">
+			<input type="hidden" name="addMode" th:value="${addMode}">
+			<input type="hidden" th:field="*{idServico}" th:value="${idServico}">
+			<table id="cadastro">
+				<tr>
+					<td id="cadastro">
+						<input id="descricao" type="text" placeholder="Descrição" th:field="*{descricao}" /><br />
+						<div th:if="${#fields.hasErrors('descricao')}" id="fielderror" th:text="${#fields.errors('descricao')[0]}">
+					</td>
+					<td id="cadastro">
+						<input id="valor" type="text" placeholder="Valor" th:text="${#numbers.formatCurrency(valor)}" th:field="*{valor}" />
+					</td>
+				</tr>
+			</table>
+			<input id="newreg" class="saveservice" type="submit" value="Salvar">
+			</form>
+			<div th:if="${editMode || addMode}">
+				<h2 id="material">Materiais Utilizados</h2>
+				<div th:if="${!hasProduto}">
+					<div id="no_account">
+						Não existem produtos cadastrados.
+					</div>
+					<form method="get" th:action="@{/admin/produto/new}">
+						<input id="newreg" type="submit" value="Produto">
+					</form>
+				</div>
+				<table id="resultset" th:if="${(editMode  && materiais.size() > 0) || addMode}">
+					<tr>
+						<th id="descricao">Material</th>
+						<th id="quantidade" class="endline">Quantidade</th>
+					</tr>
+					<tr th:each="material : ${materiais}">
+						<td id="resultset" th:text="${material.produtoMaterial.descricao}"></td>
+						<td id="quantidade" class="endline" th:text="${material.strQuantidade()}"></td>
+						<td id="acao">
+							<form method="get" th:action="@{/admin/servico/material/edit}">
+								<input type="hidden" name="idMatEdit" th:value="${material.idMaterial}">
+								<input type="hidden" name="idServEdit" th:value="${material.servicoMaterial.idServico}">
+								<input id="acao" type="image" th:src="@{/images/editar.png}">
+							</form>
+						</td>
+						<td id="acao">
+							<img id="acao" th:src="@{/images/excluir.png}"
+							     th:onclick="'javascript: confirmMatWindow(\'delete\', \'idMatDelele\', ' + ${material.idMaterial} + ', \'idServDelele\', ' + ${material.servicoMaterial.idServico} + ');'">
+						</td>
+					</tr>
+				</table>
+				<div th:if="${addMode}">
+					<form method="post" th:action="@{/admin/servico/material/save}">
+					<input type="hidden" name="editMode" th:value="${editMode}">
+					<input type="hidden" name="addMode" th:value="${addMode}">
+					<table id="cadastro" th:object="${material}"> 
+						<tr>
+							<td id="cadastro">
+								<input type="hidden" th:field="*{servicoMaterial}" th:value=${material.getServicoMaterial().getIdServico()}>
+								<input  id="idMatEdit" type="hidden" th:field="${material.idMaterial}">
+								<select id="produtoMaterial" th:field="*{produtoMaterial}">
+								    <option value="0" selected="selected">Material</option>
+									<option th:each="produto : ${produtos}" th:value="${produto.getIdProduto()}"
+											th:text="${produto.descricao}"></option>
+								</select>
+								<input id="quantidade" type="text" placeholder="Qtdade" th:field="*{quantidade}" />
+							</td>
+						</tr>
+					</table>
+					<input id="newreg" type="submit" value="Salvar">
+					</form>
+				</div>
+				<div id="no_material" th:if="${materiais.size() == 0 && !addMode}">
+					Não há materiais cadastrados para este serviço.
+				</div>
+				<div th:if="${!addMode}">
+					<form th:object="${servico}" th:action="@{/admin/servico/material/new}">
+						<input type="hidden" th:field="*{idServico}" th:value="${idServico}">
+						<input id="newreg" type="submit" value="Novo Registro">
+					</form>
+				</div>
+				<form method="get" th:action="@{/admin/servico/}">
+					<input id="finalize" type="submit" value="Finalizar">
+				</form>
+				<div id="delete">Confima exclusão?<br />
+				<form method="post" th:action="@{/admin/servico/material/delete}">
+					<input id="idServDelele" type="hidden" name="idServDelele" value="0">
+					<input id="idMatDelele" type="hidden" name="idMatDelele" value="0">
+					<input id="deleteBtn" type="submit" value="Sim" onclick="document.getElementById('delete').style.visibility = 'hidden';">
+					<input id="deleteBtn" type="button" value="Não" onclick="document.getElementById('delete').style.visibility = 'hidden';">
+				</form></div>
+			</div>
+		</div>
+	</body>
+</html>

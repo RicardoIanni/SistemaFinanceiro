@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+
+	<div th:replace="header :: header"></div>
+	<body>
+		<div th:replace="logo :: login"></div>
+		<!-- Cabeçalho - Fim -->
+
+		<!--  Conteúdo -->
+		<div layout:fragment="content"></div>
+		
+		<!-- Rodapé - Início -->
+	</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<h1>Contas</h1>
+			<form id="filter" method="get" th:object="${filter}" th:action="@{/admin/conta/}">
+				<div th:replace="filtro :: cadastro"></div>
+			</form>
+			<form method="get" th:action="@{/admin/conta/new}">
+				<input id="newreg" type="submit" value="Novo Registro">
+			</form>
+			<table id="resultset" th:if="${contas.size() > 0}">
+				<tr>
+					<th id="descricao">Descrição</th>
+					<th id="tipoconta">Tipo de<br />Conta</th>
+					<th id="valor" class="endline">Saldo<br />Inicial</th>
+				</tr>
+				<tr th:each="conta : ${contas}">
+					<td id="resultset" th:text="${conta.descricao}"></td>
+					<td id="resultset" th:text="${conta.tipoConta.descricao}"></td>
+					<td id="valor" class="endline" th:text="${conta.strSaldoInicial()}"></td>
+					<td id="acao"><form method="post" th:action="@{/admin/conta/edit}">
+						<input type="hidden" id="idContaEdit" name="idContaEdit" th:value="${conta.idConta}">
+						<input type="image" id="acao" th:src="@{/images/editar.png}">
+					</form></td>
+					<td id="acao">
+						<img id="acao" th:src="@{/images/excluir.png}" th:onclick="'javascript: confirmWindow(\'delete\', \'idContaDelele\', ' + ${conta.idConta} + ');'">
+					</td>
+				</tr>
+			</table>
+			<div id="no_resultset" th:if="${contas.size() == 0}">
+				Não foram encontradas contas para o filtro utilizado.
+			</div>
+			<div id="delete">Confima exclusão?<br />
+			<form method="post" th:action="@{/admin/conta/delete}">
+				<input id="idContaDelele" type="hidden" name="idContaDelele" value="0">
+				<input id="deleteBtn" type="submit" value="Sim" onclick="document.getElementById('delete').style.visibility = 'hidden';">
+				<input id="deleteBtn" type="button" value="Não" onclick="document.getElementById('delete').style.visibility = 'hidden';">
+			</form></div>
+			<div id="denied" th:if="${hasMovement}">Existem movimentos para esta conta.<br />
+			Exclusão não permitida.<br /><br />
+			<input type="button" value="Ok" onclick="document.getElementById('denied').style.visibility = 'hidden';">
+			</div>
+		</div>
+	</body>
+</html>

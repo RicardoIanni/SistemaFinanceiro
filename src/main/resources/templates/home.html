@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<div th:replace="header :: header"></div>
+	<body>
+	<div th:replace="logo :: dashboard"></div>
+	<div th:replace="menu :: navbar"></div> 
+	
+		<table id="dashboard">
+	        <tr>
+	            <td id="dashboardItem" align="center">
+	                <fieldset id="dashboard">
+	                    <legend>Agenda do Dia</legend>
+	                    <div th:replace="dashboard :: agendamento"></div>
+	                </fieldset>
+	            </td>
+	            <td>
+	                <fieldset id="dashboard" style="margin-right: 5px;">
+	                    <legend>Aniversariantes do Mês</legend>
+	                    <div th:replace="dashboard :: aniversariante"></div>
+	                </fieldset>
+	            </td>
+	        </tr>
+	        <tr style="visibility: hidden;">
+	            <td>
+	                <fieldset id="dashboard">
+	                    <legend>Quadro de Avisos</legend>
+	                </fieldset>
+	            </td>
+	            <td>
+	                <fieldset id="dashboard">
+	                    <legend>Previsão de Retorno no Mês</legend>
+	                </fieldset>
+	            </td>
+	        </tr>
+	    </table>
+	</body>
+</html>

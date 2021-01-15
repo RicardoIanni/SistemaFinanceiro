@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<h1>Agendamentos</h1>
+			<div th:if="${clientes.size() == 0}">
+				<div id="no_account">
+					Não existem clientes cadastrados.
+				</div>
+				<form method="get" th:action="@{/admin/cliente/new}">
+					<input id="newreg" type="submit" value="Cliente">
+				</form>
+			</div>
+			<div th:if="${funcionarios.size() == 0}">
+				<div id= no_supplier>
+					Não existem profissionais cadastrados.
+				</div>
+				<form method="get" th:action="@{/admin/funcionario/new}">
+					<input id="newreg" type="submit" value="Profissional">
+				</form>
+			</div>
+			<div th:if="${servicos.size() == 0}">
+				<div id= no_supplier>
+					Não existem servicos cadastrados.
+				</div>
+				<form method="get" th:action="@{/admin/servico/new}">
+					<input id="newreg" type="submit" value="Serviço">
+				</form>
+			</div>
+			<form method="post" th:action="@{/admin/agendamento/save}">
+				<div th:if="${servicos.size() > 0 && funcionarios.size() > 0 && clientes.size() > 0}">
+				<table id="cadastro" th:object="${agendamento}">
+				<input type="hidden" th:field="*{idAgendamento}">
+					<tr>
+						<td id="cadastro">
+							<select id="pessoa" th:field="*{clienteAgendamento}">
+							    <option value="0" selected="selected">Cliente</option>
+								<option th:each="cliente : ${clientes}" th:value="${cliente.getIdCliente()}" th:text="${cliente.nome}"></option>
+							</select>
+							<input id="data" type="date" th:field="*{dataAgendamento}" />
+							<input id="hora" type="time" style="width: 80px;" th:field="*{horaAgendamento}" />
+						</td>
+					</tr>
+					<tr>
+						<td id="cadastro">
+							<select id="pessoa" th:field="*{funcionarioAgendamento}">
+							    <option value="0" selected="selected">Atendente</option>
+								<option th:each="funcionario : ${funcionarios}" th:value="${funcionario.getIdFuncionario()}" 
+										th:text="${funcionario.nome}"></option>
+							</select>
+							<select id="servico" th:field="*{servicoAgendamento}">
+							    <option value="0" selected="selected">Serviço</option>
+								<option th:each="servico : ${servicos}" th:value="${servico.getIdServico()}" th:text="${servico.descricao}"></option>
+							</select>	
+						</td>
+					</tr>
+				</table>
+				<input id="newreg" type="submit" value="Gravar" />
+			</form>
+		</div>
+	</body>
+</html>

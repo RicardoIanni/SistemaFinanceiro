@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body onload="onloadCadastro();">
+		<div layout:fragment="content">
+			<h1>Fornecedores</h1>
+			<form method="post" autocomplete="off" th:action="@{/admin/fornecedor/save}">
+			<input type="hidden" name="edit" th:value="${editMode}">
+			<table th:object="${fornecedor}" id="fornecedor">
+				<tr>
+					<input type="hidden" th:if="${editMode}" th:field="*{idFornecedor}" />
+					<td id="cadastro" colspan="2">
+						<input id="pj" type="radio" value="pj" th:field="*{pf_pj}" onclick="pjSelected();" /><label for="pj">PJ</label>
+						<input id="pf" type="radio" value="pf" th:field="*{pf_pj}" onclick="pfSelected();" /><label for="pf">PF</label>
+					</td>
+				</tr>
+				<tr>
+					<td id="cadastro">
+						<input id="nome" type="text" placeholder="Nome" th:field="*{nome}" /><br />
+						<div th:if="${#fields.hasErrors('nome')}" id="fielderror" th:text="${#fields.errors('nome')[0]}"></td>
+					<td id="fornecedor">
+						<input id="cnpj" type="text" placeholder="CNPJ"  th:field="*{cnpj}" maxlength="14"
+							   th:style="${fornecedor.getPf_pj() == 'pf'} ? 'visibility: hidden;' : 'visibility: visible;'"
+							   onfocus="javascript: retirarFormatacao(this);" onblur="javascript: mascaraCnpj(this);" />
+						<input id="cpf" type="text" placeholder="CPF" th:field="*{cpf}" maxlength="11"
+							   th:style="${fornecedor.getPf_pj() != 'pf'} ? 'visibility: hidden;' : 'visibility: visible;'" 
+						   	   onfocus="javascript: retirarFormatacao(this);" onblur="javascript: mascaraCpf(this); "/></td>
+				</tr>
+			</table>
+			<div th:replace="email :: email"></div>
+			<div th:replace="telefone :: telefone"></div>
+			<div th:replace="endereco :: endereco"></div>
+			<input id="newreg" type="submit" value="Salvar">
+			</form>
+		</div>
+	</body>
+</html>

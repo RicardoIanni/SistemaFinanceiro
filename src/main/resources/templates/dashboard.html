@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+				<table id="dashboardItem" th:fragment="agendamento" th:if="${agendamentos.size() > 0}">
+					<tr>
+						<th id="hora">Horário</th>
+						<th id="nome">Cliente</th>
+						<th id="nome">Atendente</th>
+						<th id="descricao" class="endline">Serviço</th>
+					</tr>
+					<tr th:each="agendamento : ${agendamentos}" th:class="${agendamento.situacao.toString().toLowerCase()}">
+						<td id="hora" th:text="${agendamento.horaAgendamento}"></td>
+						<td id="resultset" th:text="${agendamento.clienteAgendamento.nome}"></td>
+						<td id="resultset" th:text="${agendamento.funcionarioAgendamento.nome}"></td>
+						<td id="resultset" class="endline" th:text="${agendamento.servicoAgendamento.descricao}"></td>
+						<td id="acao"><form method="post" th:action="@{/admin/agendamento/cancel}">
+							<input type="hidden" id="idAgendCancel" name="idAgendCancel" th:value="${agendamento.idAgendamento}">
+							<input type="image" id="acao" th:src="@{/images/excluir.png}" th:disabled="${agendamento.situacao.toString() != 'Agendado'}">
+						</form></td>
+						<td id="acao"><form method="post" th:action="@{/admin/agendamento/confirm}">
+							<input type="hidden" id="idAgendConfirm" name="idAgendConfirm" th:value="${agendamento.idAgendamento}">
+							<input type="image" id="acao" th:src="@{/images/confirmar.png}" th:disabled="${agendamento.situacao.toString() != 'Agendado'}">
+						</form></td>
+					</tr>
+				</table>
+				
+				<table id="dashboardItem" th:fragment="aniversariante" th:if="${aniversarios.size() > 0}">
+					<tr>
+						<th id="aniversariante">Cliente</th>
+						<th id="email">E-mail</th>
+						<th id="telefone">Telefone</th>
+						<th id="data" class="endline">Data</th>
+					</tr>
+					<tr th:each="aniversario : ${aniversarios}">
+						<td id="resultset" th:text="${aniversario.nome}"></td>
+						<td id="resultset" th:text="${aniversario.email(0)}"></td>
+						<td id="resultset" th:text="${aniversario.telefone(0)}"></td>
+						<td id="data" class="endline" th:text="${aniversario.getAniversario(aniversario.dataNascimento)}"></td>
+					</tr>
+				</table>
+</body>
+</html>

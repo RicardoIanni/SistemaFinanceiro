@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+				<table id="filter" th:fragment="cadastro">
+					<tr>
+						<td id="filter">
+							<input id="filter"    type="text"   th:field="*{texto}">
+							<input id="btnfilter" type="button" value="Filtrar" onclick="form.submit()">
+						</td>
+					</tr>
+				</table>
+				
+				<table id="filter" th:fragment="financeiro">
+					<tr>
+						<td>
+							<select id="conta" th:field="*{idConta}" onchange="form.submit()">
+							    <option value="0" selected="selected">Todas as contas</option>
+								<option th:each="conta : ${contas}" th:value="${conta.getIdConta()}" th:text="${conta.descricao}"></option>
+							</select>
+							<select id="meses" th:field="*{numeroMes}" onchange="form.submit()">
+								<option th:each="mes : ${meses}" th:value="${mes[0]}" th:text="${mes[1]}"></option>
+							</select>
+							<select id="anos" th:field="*{ano}" onchange="form.submit()">
+								<option th:each="ano : ${anos}" th:value="${ano[0]}" th:text="${ano[0]}"></option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				
+				<table id="filter" th:fragment="agendamento">
+					<tr>
+						<td>
+							<input type="date" th:field="*{data}" onblur="form.submit()">
+							<input type="time" th:field="*{hora}" onblur="form.submit()">
+							<select id="pessoa" th:field="*{idCliente}" onchange="form.submit()">
+							    <option value="0" selected="selected">Todas os clientes</option>
+								<option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.nome}"></option>
+							</select>
+							<select id="pessoa" th:field="*{idFuncionario}" onchange="form.submit()">
+							    <option value="0" selected="selected">Todas os atendentes</option>
+								<option th:each="funcionario : ${funcionarios}" th:value="${funcionario.idFuncionario}" th:text="${funcionario.nome}"></option>
+							</select>
+							<select id="servico" th:field="*{idServico}" onchange="form.submit()">
+							    <option value="0" selected="selected">Todas os serviços</option>
+								<option th:each="servico : ${servicos}" th:value="${servico.idServico}" th:text="${servico.descricao}"></option>
+							</select>
+						</td>
+					</tr>
+				</table>
+</body>
+</html>

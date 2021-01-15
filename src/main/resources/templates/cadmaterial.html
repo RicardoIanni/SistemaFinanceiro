@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+	<body>
+		<div layout:fragment="content">
+			<div>
+				<h1>Cadastro de Material</h1>
+				<form method="post" th:action="@{/admin/servico/save}">
+					<fieldset th:object="${material}" id="servico">
+						<input type="hidden" th:field="*{salaoMaterial}">
+						<input type="hidden" th:field="*{idMaterial}">
+						<input type="hidden" th:field="*{produtoMaterial}">
+						<input type="hidden" th:field="*{materialServico}">
+						<input type="hidden" th:field="*{quantidade}">
+						<!-- <table>
+							<tr>
+								<td>
+									<input style="width: 150px;" type="text" id="descricao"  placeholder="Descrição" th:field="*{descricao}" />
+								</td>
+								<td>
+									<input style="width: 100px;" type="text" id="valor" placeholder="Valor" th:text="${#numbers.formatCurrency(valor)}" th:field="*{valor}" />
+								</td>
+								<td id="tdAtivo">
+									<label class="lblAtivo">Ativo
+										<input type="checkbox" th:field="*{ativo}" />
+										<span class="checkmark"></span>
+									</label>
+								</td>
+							</tr>
+						</table>
+					</fieldset>
+					<fieldset th:if="${editMode}" th:object="${material}" id="material">
+						<select style="height:22px;" th:field="*{produtoMaterial}">
+						    <option value="0" selectesd="selected">Selecione o material utilizado</option>
+							<option th:each="material : ${materiais}" th:value="${material.getIdProduto()}" th:text="${material.descricao}"></option>
+						</select>
+						<input type="text" th:field="*{quantidade}" />
+					</fieldset> -->
+					<input title="Gravar" id="cadastrar" type="image" th:src="@{/images/cadastrar.png}">
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
